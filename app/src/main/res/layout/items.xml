@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="415dp"
+        android:layout_height="76dp"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/IV"
+            android:layout_width="104dp"
+            android:layout_height="76dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:padding="2dp" />
+
+        <TextView
+            android:id="@+id/t2"
+            android:layout_width="226dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/t1"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/IV"
+            android:text="Line 2"
+            android:textAlignment="viewEnd"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/t1"
+            android:layout_width="229dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_toStartOf="@+id/IV"
+            android:text="Line 1 "
+            android:textAlignment="viewEnd"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/deletebutton"
+            android:layout_width="38dp"
+            android:layout_height="34dp"
+            android:layout_alignBottom="@+id/t2"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="9dp"
+            android:layout_toStartOf="@+id/t1"
+            android:background="@drawable/deleterounded"
+            app:srcCompat="@drawable/ic_delete_black_24dp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
