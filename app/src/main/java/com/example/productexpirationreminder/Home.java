@@ -42,6 +42,8 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,6 +70,12 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        try {
+            outputStream=openFileOutput("Items",MODE_APPEND);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         noitem=findViewById(R.id.noitem);
         if (exampleList.isEmpty()){
             noitem.setVisibility(View.VISIBLE);
@@ -187,7 +195,26 @@ public class Home extends AppCompatActivity {
     public void insertItem(int position){
         exampleList.add(position,new AddItem(imageUri, "ناوی شتومەك: "+itemName.getText().toString(), "بەرواری بەەسەرچوون: " +calenderE.getText().toString()));
         mAdapter.notifyItemInserted(position);
+        savetointernal();
         noitem.setVisibility(View.INVISIBLE);
+    }
+
+    private void savetointernal() {
+        try {
+            outputStream.write(imageUri.toString().getBytes());
+            outputStream.write(itemName.getText().toString().getBytes());
+            outputStream.write(calenderE.getText().toString().getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void removeItem(int position) {
