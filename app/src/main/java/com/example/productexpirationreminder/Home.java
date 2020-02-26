@@ -60,6 +60,7 @@ public class Home extends AppCompatActivity {
     EditText calenderE,itemName;
     ImageButton imageButton;
     Button AddItem;
+    String file="items";
     private RecyclerView mRecyclerView;
     private ExampleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -71,7 +72,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         try {
-            outputStream=openFileOutput("Items",MODE_APPEND);
+            outputStream=openFileOutput(file,MODE_APPEND);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -201,9 +202,15 @@ public class Home extends AppCompatActivity {
 
     private void savetointernal() {
         try {
+            outputStream.write("\n".getBytes());
             outputStream.write(imageUri.toString().getBytes());
+            outputStream.write("\n".getBytes());
             outputStream.write(itemName.getText().toString().getBytes());
+            outputStream.write("\n".getBytes());
             outputStream.write(calenderE.getText().toString().getBytes());
+            outputStream.write("\n".getBytes());
+            outputStream.write("-------------------".getBytes());
+            outputStream.write("\n".getBytes());
 
         } catch (IOException e) {
             e.printStackTrace();

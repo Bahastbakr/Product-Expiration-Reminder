@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Start extends AppCompatActivity {
-    Button login,cancel ,loginD;
+    Button login ,loginD;
     EditText email,pass;
 
  public static SharedPreferences sharedPreferences;
@@ -36,13 +36,7 @@ public class Start extends AppCompatActivity {
         dialog.setTitle("چوونەژوورەوە");
         dialog.setCancelable(true);
         dialog.show();
-        Button cancel = (Button) dialog.findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+
         loginD=dialog.findViewById(R.id.loginD);
         loginD.setOnClickListener(new View.OnClickListener() {
             @Override

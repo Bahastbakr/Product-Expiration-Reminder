@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    android:background="@color/white"
     tools:context=".Start">
 
     <Button
         android:id="@+id/login2"
-        android:layout_width="410dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="108dp"
-        android:background="@drawable/diffcolor"
+        android:layout_width="382dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="124dp"
+        android:background="@drawable/rounded"
         android:text="چوونە ژوورەوە "
-        android:textColor="#F5F5F5"
+        android:textColor="#F8F8F8"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,18 +26,19 @@
 
     <Button
         android:id="@+id/login3"
-        android:layout_width="410dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/diffcolor"
+        android:layout_width="382dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/rounded"
         android:text="خۆتۆماركردن"
-        android:textColor="#FFFFFF"
+        android:textColor="#F6F6F6"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pass"
         app:layout_constraintVertical_bias="0.269" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

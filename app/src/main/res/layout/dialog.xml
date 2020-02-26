@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2A9E9A9A"
+
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="362dp"
-        android:layout_height="364dp"
-        android:background="#0FAAAAAA"
+        android:layout_width="442dp"
+        android:layout_height="372dp"
+        android:background="@drawable/roundedwhite"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.183"
         tools:context=".MainActivity">
 
         <EditText
@@ -29,9 +31,10 @@
             android:textAlignment="viewEnd"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.653" />
+            app:layout_constraintVertical_bias="0.608" />
 
         <EditText
             android:id="@+id/email"
@@ -66,35 +69,19 @@
 
         <Button
             android:id="@+id/loginD"
-            android:layout_width="154dp"
-            android:layout_height="44dp"
+            android:layout_width="294dp"
+            android:layout_height="55dp"
             android:layout_marginTop="188dp"
             android:background="@drawable/rounded"
             android:text="چوونە ژوورەوە "
-            android:textColor="#000000"
-            android:textSize="24sp"
+            android:textColor="#FDFDFD"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.929"
+            app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.719" />
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="154dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="188dp"
-            android:background="@drawable/rounded"
-            android:text="پاشگەستبوون"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.119"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.719" />
+            app:layout_constraintVertical_bias="0.811" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
