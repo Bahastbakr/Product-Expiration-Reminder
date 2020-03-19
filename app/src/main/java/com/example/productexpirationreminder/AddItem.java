@@ -15,6 +15,17 @@ public class AddItem {
         this.textView1 = textView1;
     }
 
+    public void setImageView(Uri imageView) {
+        this.imageView = imageView;
+    }
+
+    public void setTextView(String textView) {
+        this.textView = textView;
+    }
+
+    public void setTextView1(String textView1) {
+        this.textView1 = textView1;
+    }
 
     public Uri getImageView() {
         return imageView;
@@ -26,6 +37,9 @@ public class AddItem {
 
     public String getTextView1() {
         return textView1;
+    }
+    public AddItem(){
+
     }
 
 

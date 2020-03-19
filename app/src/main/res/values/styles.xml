@@ -5,6 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textViewStyle">@style/spedaFontStyle</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -16,5 +17,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="spedaFontStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily"> @font/speda</item>
+    </style>
 
 </resources>

@@ -2,19 +2,27 @@ package com.example.productexpirationreminder;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,6 +31,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -33,22 +46,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
+    FirebaseFirestore db ;
+
+
+
     OutputStream outputStream;
     DrawerLayout drawerLayout;
     Snackbar snackbar;
@@ -71,6 +94,9 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        db=FirebaseFirestore.getInstance();
+        additemtodatebase();
         try {
             outputStream=openFileOutput(file,MODE_APPEND);
         } catch (FileNotFoundException e) {
@@ -109,6 +135,7 @@ public class Home extends AppCompatActivity {
 
                             }
                         });
+
                         imageButton=dialog.findViewById(R.id.imageButton2);
                         imageButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -120,7 +147,6 @@ public class Home extends AppCompatActivity {
                         AddItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
 
                                 try{
 
@@ -139,7 +165,6 @@ public class Home extends AppCompatActivity {
                                         int position = 0;
                                         insertItem(position);
 
-
                                         snackbar = Snackbar.make(drawerLayout, "شتومەكەكەت زیادكرا", Snackbar.LENGTH_SHORT);
                                         View view = snackbar.getView();
                                         TextView txtv = view.findViewById(R.id.snackbar_text);
@@ -148,6 +173,7 @@ public class Home extends AppCompatActivity {
 
                                         snackbar.show();
                                         dialog.dismiss();
+                                        additemtodatebase();
                                     }
                                 }
                                 catch (Exception e){
@@ -187,9 +213,72 @@ public class Home extends AppCompatActivity {
     }
 
 
+    void additemtodatebase(){
+        Map<String, Object> item = new HashMap<>();
+        item.put("title", "hey");
+        item.put("expiredate", "hahahahah");
+
+        db.collection("items").add(item).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(Home.this,"item added to firestore",Toast.LENGTH_LONG).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Home.this,"failed added to firestore",Toast.LENGTH_LONG).show();
+
+            }
+        });
 
 
+    }
 
+    String getFileExtenstion(Uri uri){
+        ContentResolver cR=getContentResolver();
+        MimeTypeMap mime =MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+
+    }
+   /* void uploadimage(){
+    if(imageUri!=null){
+    StorageReference filereference=msReference.child(+System.currentTimeMillis()+"."+getFileExtenstion(imageUri));
+    filereference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        @Override
+        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            Handler handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setProgress(0);
+                }
+            },500);
+            Toast.makeText(Home.this,"بە سەركەوتووی ئەپوڵۆد بوو",Toast.LENGTH_LONG).show();
+            String uploadid=myRef.push().getKey();
+
+
+        }
+    })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Home.this,e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                }
+            })
+            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                        progressBar.setProgress((int)progress);
+                }
+            });
+    }else{
+
+    }
+    }
+
+*/
 
 
 
@@ -231,6 +320,8 @@ public class Home extends AppCompatActivity {
 
 
     public void buildRecyclerView() {
+
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
 
@@ -318,4 +409,38 @@ Calendar calender =Calendar.getInstance();
         },year,month,date);
         datePickerDialog.show();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+       // FirebaseRecyclerAdapter<AddItem,ItemViewholder>firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<com.example.productexpirationreminder.AddItem, ItemViewholder>
+         //       (AddItem.class,R.layout.items,ItemViewholder.class,databaseReference) {
+         //   @Override
+          //  protected void populateViewHolder(ItemViewholder itemViewholder, com.example.productexpirationreminder.AddItem addItem, int i) {
+          //      itemViewholder.settitle(addItem.getTextView());
+           //     itemViewholder.setEdate(addItem.getTextView1());
+
+           // }
+        };
+      //  mRecyclerView.setAdapter(firebaseRecyclerAdapter);
+
+   // }
+    public static class ItemViewholder extends RecyclerView.ViewHolder{
+        View mview;
+        public ItemViewholder(View itemview){
+            super(itemview);
+            mview=itemview;
+
+        }
+        public void settitle(String title){
+           TextView item_title=mview.findViewById(R.id.t1);
+           item_title.setText(title);
+        }
+        public void setEdate(String Edate){
+            TextView Item_Edate=mview.findViewById(R.id.t2);
+            Item_Edate.setText(Edate);
+        }
+    }
+
 }
