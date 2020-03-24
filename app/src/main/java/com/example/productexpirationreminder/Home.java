@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,8 +32,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -68,9 +67,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Home extends AppCompatActivity {
-    FirebaseFirestore db ;
 
-
+FirebaseFirestore db;
 
     OutputStream outputStream;
     DrawerLayout drawerLayout;
@@ -82,7 +80,7 @@ public class Home extends AppCompatActivity {
     ImageView calenderB,Imageview;
     EditText calenderE,itemName;
     ImageButton imageButton;
-    Button AddItem;
+    Button AddItem,bbb;
     String file="items";
     private RecyclerView mRecyclerView;
     private ExampleAdapter mAdapter;
@@ -95,8 +93,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        db=FirebaseFirestore.getInstance();
-        additemtodatebase();
+        db = FirebaseFirestore.getInstance();
         try {
             outputStream=openFileOutput(file,MODE_APPEND);
         } catch (FileNotFoundException e) {
@@ -114,12 +111,41 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+bbb=findViewById(R.id.bbb);
+bbb.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
 
+        Map<String, Object> user = new HashMap<>();
+        user.put("first", "Ada");
+        user.put("last", "Lovelace");
+        user.put("born", 1815);
+
+// Add a new document with a generated ID
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Toast.makeText(Home.this,"added",Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error adding document", e);
+                    }
+                });
+
+    }
+});
 
         FloatingActionButton fab = findViewById(R.id.fab);
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         dialog = new Dialog(Home.this);
                         dialog.setContentView(R.layout.newp);
                         dialog.setTitle("زیادكردن");
@@ -148,7 +174,7 @@ public class Home extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                try{
+                               try{
 
                                     if(calenderE.getText().toString().isEmpty()||itemName.getText().toString().isEmpty()){
                                         snackbar = Snackbar.make(drawerLayout, "تكایە زانیارییەكان پڕبەكەرەوە", Snackbar.LENGTH_SHORT);
@@ -158,6 +184,7 @@ public class Home extends AppCompatActivity {
                                         txt.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
                                         snackbar.show();
 
+
                                     }
                                     else {
 
@@ -165,6 +192,7 @@ public class Home extends AppCompatActivity {
                                         int position = 0;
                                         insertItem(position);
 
+                                       // additemtodatebase();
                                         snackbar = Snackbar.make(drawerLayout, "شتومەكەكەت زیادكرا", Snackbar.LENGTH_SHORT);
                                         View view = snackbar.getView();
                                         TextView txtv = view.findViewById(R.id.snackbar_text);
@@ -173,7 +201,7 @@ public class Home extends AppCompatActivity {
 
                                         snackbar.show();
                                         dialog.dismiss();
-                                        additemtodatebase();
+
                                     }
                                 }
                                 catch (Exception e){
@@ -182,7 +210,6 @@ public class Home extends AppCompatActivity {
 
 
                                 }
-
 
                             }
                         });
@@ -213,34 +240,9 @@ public class Home extends AppCompatActivity {
     }
 
 
-    void additemtodatebase(){
-        Map<String, Object> item = new HashMap<>();
-        item.put("title", "hey");
-        item.put("expiredate", "hahahahah");
-
-        db.collection("items").add(item).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(Home.this,"item added to firestore",Toast.LENGTH_LONG).show();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Home.this,"failed added to firestore",Toast.LENGTH_LONG).show();
-
-            }
-        });
 
 
-    }
 
-    String getFileExtenstion(Uri uri){
-        ContentResolver cR=getContentResolver();
-        MimeTypeMap mime =MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-
-    }
    /* void uploadimage(){
     if(imageUri!=null){
     StorageReference filereference=msReference.child(+System.currentTimeMillis()+"."+getFileExtenstion(imageUri));
@@ -285,11 +287,12 @@ public class Home extends AppCompatActivity {
     public void insertItem(int position){
         exampleList.add(position,new AddItem(imageUri, "ناوی شتومەك: "+itemName.getText().toString(), "بەرواری بەەسەرچوون: " +calenderE.getText().toString()));
         mAdapter.notifyItemInserted(position);
-        savetointernal();
+    //    additemtodatebase();
+        // savetointernal();
         noitem.setVisibility(View.INVISIBLE);
     }
 
-    private void savetointernal() {
+    /*private void savetointernal() {
         try {
             outputStream.write("\n".getBytes());
             outputStream.write(imageUri.toString().getBytes());
@@ -312,7 +315,7 @@ public class Home extends AppCompatActivity {
             }
         }
     }
-
+*/
     public void removeItem(int position) {
         exampleList.remove(position);
         mAdapter.notifyItemRemoved(position);

@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "581393820618",
-    "firebase_url": "https://product-expiration-reminder.firebaseio.com",
-    "project_id": "product-expiration-reminder",
-    "storage_bucket": "product-expiration-reminder.appspot.com"
+    "project_number": "263472917552",
+    "firebase_url": "https://productexpirationreminder.firebaseio.com",
+    "project_id": "productexpirationreminder",
+    "storage_bucket": "productexpirationreminder.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:581393820618:android:022e95f13815702ba53d33",
+        "mobilesdk_app_id": "1:263472917552:android:880a170688e813b8dfd1f5",
         "android_client_info": {
           "package_name": "com.example.productexpirationreminder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "581393820618-0nheeli4ralldn0m62k9ep6u6v87o2k3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.productexpirationreminder",
-            "certificate_hash": "1689d3f1edb3888f091929accace015bc8219a7d"
-          }
-        },
-        {
-          "client_id": "581393820618-ht86tqgdokrhnatg0hsjl7htlv1ahcgg.apps.googleusercontent.com",
+          "client_id": "263472917552-eg4pqujire5bpi7m4mvdg6bkms6f58tg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCX24OtK9nWdJdMKzYZbiAtpBii_c7aJSc"
+          "current_key": "AIzaSyDMOMhLlkuZFM400xcicM1nh57eS8H4c1c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "581393820618-ht86tqgdokrhnatg0hsjl7htlv1ahcgg.apps.googleusercontent.com",
+              "client_id": "263472917552-eg4pqujire5bpi7m4mvdg6bkms6f58tg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
